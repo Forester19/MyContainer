@@ -1,9 +1,6 @@
 package com.company;
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
+import java.util.*;
 
 /**
  * Created by Владислав on 04.03.2017.
@@ -36,7 +33,33 @@ public class BestCollection<Integer> implements List<Integer> {
 
     @Override
     public Iterator<Integer> iterator() {
-        return null;
+
+
+        return new Iterator<Integer>() {
+            int cursor; // cursor for array.
+            int lastRet = -1; // index of last element returned; -1 if no such
+            @Override
+            public boolean hasNext() {
+
+
+                return cursor != elementsOfData.length;
+            }
+
+            @Override
+            public Integer next() {
+                int i = cursor;
+                if (i >= elementsOfData.length)
+                    throw new NoSuchElementException();
+                int[] elementData = BestCollection.this.elementsOfData;
+                if (i >= elementData.length)
+                    throw new ConcurrentModificationException();
+                cursor = i + 1;
+                int inte = elementData[lastRet =i];
+                Number n = inte;
+                Integer integer = (Integer) n;
+                return integer;
+            }
+        };
     }
 
     @Override
@@ -198,15 +221,23 @@ public class BestCollection<Integer> implements List<Integer> {
     @Override
     public boolean add(Integer value) {
         for (int i = 0; i < elementsOfData.length; i++) {
+            int index;
             if (elementsOfData[i] == 0) {
                 Number n = (Number) value;
-                int index = n.intValue();
+                index = n.intValue();
                 elementsOfData[i] = index;
                 increaseElements(index);
                 elementsOfData = newLenghtOfArray(elementsOfData);
 
                 return true;
-            } else continue;
+            } else {
+                elementsOfData = newLenghtOfArray(elementsOfData);
+                Number n = (Number) value;
+                index = n.intValue();
+                increaseElements(index);
+                elementsOfData[elementsOfData.length-1] = index;
+                return true;
+            }
 
         }
         return false;
