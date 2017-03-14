@@ -9,7 +9,7 @@ public class Main {
         bestCollection.addLast(5);
         // bestCollection.removeWithIndex(4);
         // bestCollection.removeFirst();
-        bestCollection.add(8);
+        bestCollection.add(-4);
         bestCollection.remove(8);
 
         bestCollection.getMyContainer();

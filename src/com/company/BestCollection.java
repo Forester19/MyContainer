@@ -3,8 +3,10 @@ package com.company;
 import java.util.*;
 
 /**
- * Created by Владислав on 04.03.2017.
+ *
  * My realisation its one example of collections api. This class based on array but with specifics moments.
+ * @author Владислав
+ * @version 1.0
  */
 public class BestCollection<Integer> implements List<Integer> {
     private int[] elementsOfData;
@@ -220,11 +222,24 @@ public class BestCollection<Integer> implements List<Integer> {
 
     @Override
     public boolean add(Integer value) {
+Number num = (Number) value;
+int in = num.intValue();
+if (in<=0) try {
+    throw new NullParamToMethodAddException("field is fold", in);
+
+} catch (NullParamToMethodAddException e) {
+
+    e.getMessage();
+    return false;
+
+
+}
         for (int i = 0; i < elementsOfData.length; i++) {
             int index;
             if (elementsOfData[i] == 0) {
                 Number n = (Number) value;
                 index = n.intValue();
+
                 elementsOfData[i] = index;
                 increaseElements(index);
                 elementsOfData = newLenghtOfArray(elementsOfData);
